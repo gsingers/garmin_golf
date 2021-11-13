@@ -18,9 +18,7 @@ URL starting with: ${connectURL})`);
   // Garmin Connect uses jQuery, so it's available for this script
   jQuery("#_gc-golfdata_modal").remove();
 
-  //alert("Press OK to export Garmin golf data (this may take a while)");
-  //Pop open OAuth2 ask
-  //auth();
+  alert("Press OK to export Garmin golf data (this may take a while)");
 
   const details = [];
   const allShotDetails = [];
