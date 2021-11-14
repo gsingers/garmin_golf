@@ -146,7 +146,7 @@ URL starting with: ${connectURL})`);
                             <span id="_gc-golfdata-copied" style="display:none">Golf data copied to clipboard 👍</span>
                         </div>
                         <div style="float:right">
-                            <a class="_gc-golfdata-btn" download='golf-export.txt' href='data:text/plain;charset=utf-8,${escape(output)}'>Download</a>
+                            <a class="_gc-golfdata-btn" download='golf-export.json' href='data:text/plain;charset=utf-8,${escape(output)}'>Download</a>
                         </div>
                     </div>
                     <div style="clear:both"></div>

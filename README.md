@@ -53,17 +53,23 @@ NOTE: This script is very basic. You may want to edit it to save more details fr
 
 ### Conversion
 
-1. Use the export script to download your golf scorecard data. It will be saved as golf-export.txt. Save this file to a local folder such as `Downloads`.
+1. Use the export script to download your golf scorecard data. It will be saved as golf-export.json. Save this file to the `data` directory you created above.
 1. Open Windows command prompt or MacOS/Linux terminal
 1. Run the jq script on the exported data:
     
     To run one conversion script:
 
-        jq -r -f src/scorecard-csv.jq golf-export.txt > data/golf.csv
+        jq -r -f src/scorecard-csv.jq data/golf-export.json > data/golf.csv
         
     To run all conversion scripts (Linux/Mac Terminal only) and output the results to the `data` directory:
     
-        ./convert-all-csv.sh
+        ./convert-all-csv.sh /path/to/json/file /path/to/store/results
+        
+    Converted files will be named the same as the JSON file with `.csv` tacked on the end.
+    
+    If you are going to import this data into Google Sheets, per below, you will need to either upload your CSV files to Google Drive or run the script to output the data to a Google Drive folder, as in:
+    
+        ./convert-all-csv.sh data/golf-export.json "/Users/MyUser/Google Drive/sports/golf"
         
     
 
@@ -76,3 +82,33 @@ NOTE: This script is very basic. You may want to edit it to save more details fr
     MacOS:
 
         open data/golf.csv
+        
+        
+        
+# Import into Google Sheets
+
+Under the `src/google_sheets` directory are scripts and HTML files that can be used via the Google Sheets Apps Script function to automatically import your CSV data as generated above
+from a selected Google Drive folder and import it into your current Spreadsheet, *assuming* your spreadsheet is set up a specific way.
+
+## Installing the Google Sheets Apps Script
+
+Note: this is not a Google Apps Script tutorial.  See https://developers.google.com/apps-script?hl=en for details on getting started and understanding Google Apps Script.
+
+1. Create a new Google Spreadsheet.  (If you are using Google Chroome and are logged in as a Google user, you can simply type `sheets.new` in the Chrom URL window)
+1. Create 6 sheets by hitting the "little plus button" in the lower right corner of your Spreadsheet or choosing `Insert->Sheet` six (6) times
+1. Name the sheets: Scorecards, Hole by Hole, Raw Shot Data Row Order, Raw Shot Data Column Order, Gear
+
+        As an aside, I also create an `Analysis` sheet where I plug in all my analysis formulas and dashboards
+
+1. Choose `Extensions->Apps Script` from the Spreadsheet menu.  This should pop open a new window called `Apps Script` titled `Untitled Project`.  Name your project. 
+1. Under the `Editor` part of the Apps Script project do the following:
+    1. Copy and paste the `src/google_sheets/Code.gs` file into the `Code.gs` editor window.
+    1. Create a new HTML file in the project by selecting the `+` button next to the `Files` menu in the `Editor` part of the project. Choose `HTML` from the popup.  Call it `Picker`
+        1. You should now see two files under your project: `Code.gs` and `Picker.html`
+    1. Replace the generated HTML in `Picker.html` by copying and pasting the HTML in `src/google_sheets/Picker.html`.
+    1. Make sure both files are saved.  
+1. Reload your spreadsheet.  You should now see a new menu titled `Import Garmin Data`
+1. Select the menu item and follow the prompts.  Once completed, you should see your data in the 6 spreadsheets.
+         
+
+        
