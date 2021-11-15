@@ -11,6 +11,7 @@
     "Pin X",
     "Pin Y",
     ([range(1;12)] | map(tostring |
+        "Shot \(.) - Shot Id",
         "Shot \(.) - Club Id",
         "Shot \(.) - Start Lie",
         "Shot \(.) - End Lie",
@@ -18,7 +19,8 @@
         "Shot \(.) - Distance (yds)",
         "Shot \(.) - Type",
         "Shot \(.) - End Lat",
-        "Shot \(.) - End Lon"
+        "Shot \(.) - End Lon",
+        "Shot \(.) - Time",
     ) | .[])
 
 ],
@@ -30,29 +32,25 @@
         .holeImageUrl as $holeImage |
         .pinPosition.lat as $ppLat |
         .pinPosition.lon as $ppLong |
-        .pinPosition.x as $ppX |
-        .pinPosition.y as $ppY |
-        .shots[0].scorecardId as $scorecardId |
-        .shots as $shots |
+        .shots?[0].scorecardId as $scorecardId |
         [
           $scorecardId,
           $hole,
           $holeImage,
           $ppLat,
           $ppLong,
-          $ppX,
-          $ppY,
-          ($shots? | map(
+          (.shots? | map(
+                .id,
                 .clubId,
                 .startLoc.lie,
                 .endLoc.lie,
                 .shotOrder,
                 .meters*1.093613,
-                .shotType
+                .shotType,
                 .endLoc.lat,
-                .endLoc.lon
-
-            ) | .[])
+                .endLoc.lon,
+                .shotTime
+            )? | .[])
 
         ]
 )

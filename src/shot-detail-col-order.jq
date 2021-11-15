@@ -10,14 +10,15 @@
     "Pin Longitude",
     "Pin X",
     "Pin Y",
-    "Shot - Club Id",
-    "Shot - Start Lie",
-    "Shot - End Lie",
-    "Shot - Order",
-    "Shot - Distance (yds)",
-    "Shot - Type",
-    "Shot - End Lat",
-    "Shot - End Lon"
+    "Club Id",
+    "Start Lie",
+    "End Lie",
+    "Order",
+    "Distance (yds)",
+    "Type",
+    "End Lat",
+    "End Lon",
+    "Time"
 ],
 
 # CSV Data
@@ -46,7 +47,8 @@
           .meters*1.093613,
           .shotType,
           .endLoc.lat,
-          .endLoc.lon
+          .endLoc.lon,
+          .shotTime
 
         ]
 )
