@@ -4,12 +4,18 @@ This repo was inspired by the [Export Golf Scorecards](https://forums.garmin.com
 
 I've modified the [original code](https://forums.garmin.com/apps-software/mobile-apps-web/f/garmin-connect-web/128000/export-golf-scorecards/1229772#1229772) to download club data and shot-by-shot data for those users of Garmin's CT10 shot trackers.  
 
+I'm now in the process of upgrading this to Python, Pandas and Streamlit.  See the JQ section below if you want the original JQ + Google Sheets version
+  
+# Getting Data from Garmin
 
-# Usage
+Regardless of whether you use the older JQ version or the newer Pandas/Python version, you need to get
+data from Garmin and there is only one way to do that.
+
+## Usage
 
 Directions taken, more or less, from the thread linked above and modified for the script being in this repo.
 
-## Usage without Installation
+### Usage without Installation in the Browser
 
 1. Download or otherwise copy/checkout the script in [`src/garmin-download.js`](https://github.com/gsingers/garmin_golf/blob/main/src/garmin-download.js)
 1. Sign into Garmin Connect
@@ -20,7 +26,7 @@ Directions taken, more or less, from the thread linked above and modified for th
         gcExportGolfScores()
         
         
-## Usage with Installation
+### Usage with Installation   in the Browser
 
 1. Download or otherwise copy/checkout the script in [`src/garmin-download.js`](https://github.com/gsingers/garmin_golf/blob/main/src/garmin-download.js)
 1. Open this page: https://caiorss.github.io/bookmarklet-maker/
@@ -31,17 +37,38 @@ Directions taken, more or less, from the thread linked above and modified for th
 
 If you don't have a bookmark bar or you're on mobile, select and copy the contents of Output box, bookmark any site at all, edit the bookmark, then paste what you just copied into the Address/Location/URL box. (In Firefox you can also right-click and select "Bookmark this link")
 
-### After Installation
+#### After Installation
 
 1. Sign into Garmin Connect
 
 1.  Click on "GC export golf scores" bookmark. A dialog will open in the current tab.
 
-## Convert JSON to CSV
+
+# Processing the Data 
+## V2: Python, Pandas and StreamLit
+
+For a variety of reasons, I've decided to rewrite this.  While JQ is awesome for a lot of things, it starts to get clunky in 
+spots and I've never loved the whole Google Sheets piece, so when a friend intro'd me to Streamlit, it
+felt like this was the perfect app to try it out on, not too mention Pandas is frickin' awesome.
+
+
+### Setup
+
+0. Create a Virtual Environment (e.g. pyenv)
+1. `pip install -r requirements.txt`
+
+### Usage
+
+
+
+
+## V1: JQ + Google Sheets
+
+### Convert JSON to CSV
 
 NOTE: If you just want the JSON, you can skip this step 
 
-### Prep
+#### Prep
 
 1. Install jq for your platform: https://stedolan.github.io/jq/download/
 1. Clone or otherwise download this repository.  In the `src` directory are several `jq` scripts for converting various aspects of the JSON to CSV.
@@ -51,7 +78,7 @@ This script will reshape some of your golf export data into tabular CSV data. (O
 
 NOTE: This script is very basic. You may want to edit it to save more details from the export.
 
-### Conversion
+#### Conversion
 
 1. Use the export script to download your golf scorecard data. It will be saved as golf-export.json. Save this file to the `data` directory you created above.
 1. Open Windows command prompt or MacOS/Linux terminal
@@ -90,13 +117,13 @@ NOTE: This script is very basic. You may want to edit it to save more details fr
 Under the `src/google_sheets` directory are scripts and HTML files that can be used via the Google Sheets Apps Script function to automatically import your CSV data as generated above
 from a selected Google Drive folder and import it into your current Spreadsheet, *assuming* your spreadsheet is set up a specific way.
 
-## Installing the Google Sheets Apps Script
+### Installing the Google Sheets Apps Script
 
 Note: this is not a Google Apps Script tutorial.  See https://developers.google.com/apps-script?hl=en for details on getting started and understanding Google Apps Script.
 
 1. Create a new Google Spreadsheet.  (If you are using Google Chroome and are logged in as a Google user, you can simply type `sheets.new` in the Chrom URL window)
 1. Create 6 sheets by hitting the "little plus button" in the lower right corner of your Spreadsheet or choosing `Insert->Sheet` six (6) times
-1. Name the sheets: Scorecards, Hole by Hole, Raw Shot Data Row Order, Raw Shot Data Column Order, Gear
+1. Name the sheets: Scorecards, Hole by Hole, Raw Shot Data Row Order, Raw Shot Data Column Order, Gear, Last 10 Rounds Stats, Last 10 Rounds Drive, Last 10 Rounds Approach, Last 10 Rounds Chip, Last 10 Rounds Putt
 
         As an aside, I also create an `Analysis` sheet where I plug in all my analysis formulas and dashboards
 

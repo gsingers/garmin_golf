@@ -12,6 +12,11 @@ var HOLE_BY_HOLE_SHEET = "Hole by Hole";
 var RAW_SHOT_ROW_SHEET = "Raw Shot Data Row Order";
 var RAW_SHOT_COL_SHEET = "Raw Shot Data Column Order";
 var GEAR_SHEET = "Gear";
+var LAST_10_STATS = "Last 10 Rounds Stats";
+var LAST_10_DRIVE = "Last 10 Rounds Drive";
+var LAST_10_APPROACH = "Last 10 Rounds Approach";
+var LAST_10_CHIP = "Last 10 Rounds Chip";
+var LAST_10_PUTT = "Last 10 Rounds Putt";
 var TEMP_SHEET = "Temp Calculations";
 
 //@OnlyCurrentDoc
@@ -57,6 +62,11 @@ function importGarminGolfData(folder_id){
   var raw_shot_row;
   var raw_shot_col;
   var gear;
+  var last_10_stats;
+  var last_10_drive;
+  var last_10_approach;
+  var last_10_chip;
+  var last_10_putt;
   if (data_files.hasNext()){
     while (data_files.hasNext()){
       csv_file = data_files.next();

@@ -23,12 +23,17 @@ URL starting with: ${connectURL})`);
   const details = [];
   const allShotDetails = [];
   let allClubs = [];
+  let last10DataStats = {};
+  let last10DataPutt = {};
+  let last10DataChip = {};
+  let last10DataDrive = {};
+  let last10DataApproach = {};
   let summary = {};
   let pendingRequests = 1;//start at one for getting the club data, but we don't do onreceive b/c this isn't the maain call
   jQuery.getJSON("https://connect.garmin.com/modern/proxy/gcs-golfcommunity/api/v2/club/player?per-page=1000&include-stats=true&_=1636130447923",
       function (clubData) {
-        if (clubData.length === 0){
-          console.log("No Club Data found");
+        if (clubData.length === 0) {
+          console.log("No drive Data found");
         }
         allClubs = clubData;
         pendingRequests--;//since we started at 1, we do need to decrement here even though we aren't doing onreceive
@@ -37,6 +42,72 @@ URL starting with: ${connectURL})`);
     pendingRequests--;
     onReceive();
   });
+  //Get player stats
+  jQuery.getJSON("https://connect.garmin.com/modern/proxy/gcs-golfcommunity/api/v2/player/stats",
+      function (statsData) {
+        if (statsData.length === 0) {
+          console.log("No overall stats Data found");
+        }
+        last10DataStats = statsData;
+        pendingRequests--;//since we started at 1, we do need to decrement here even though we aren't doing onreceive
+      }).fail(function () {
+        console.log(`Failed to retrieve last 10 stats data`);
+        pendingRequests--;
+        onReceive();
+  });
+  //Get driving data
+  jQuery.getJSON("https://connect.garmin.com/modern/proxy/gcs-golfcommunity/api/v2/shot/stats/drive",
+      function (driveData) {
+        if (driveData.length === 0) {
+          console.log("No driving Data found");
+        }
+        last10DataDrive = driveData;
+        pendingRequests--;//since we started at 1, we do need to decrement here even though we aren't doing onreceive
+      }).fail(function () {
+        console.log(`Failed to retrieve last 10 drive data`);
+        pendingRequests--;
+        onReceive();
+  });
+  //Get approach data
+  jQuery.getJSON("https://connect.garmin.com/modern/proxy/gcs-golfcommunity/api/v2/shot/stats/approach",
+      function (approachData) {
+        if (approachData.length === 0) {
+          console.log("No approach Data found");
+        }
+        last10DataApproach = approachData;
+        pendingRequests--;//since we started at 1, we do need to decrement here even though we aren't doing onreceive
+      }).fail(function () {
+        console.log(`Failed to retrieve last 10 approach data`);
+        pendingRequests--;
+        onReceive();
+  });
+  //Get Chipping Data
+  jQuery.getJSON("https://connect.garmin.com/modern/proxy/gcs-golfcommunity/api/v2/shot/stats/chip",
+      function (chipData) {
+        if (chipData.length === 0) {
+          console.log("No chip Data found");
+        }
+        last10DataChip = chipData;
+        pendingRequests--;//since we started at 1, we do need to decrement here even though we aren't doing onreceive
+      }).fail(function () {
+        console.log(`Failed to retrieve last 10 chip data`);
+        pendingRequests--;
+        onReceive();
+  });
+  // Get Putting data
+  jQuery.getJSON("https://connect.garmin.com/modern/proxy/gcs-golfcommunity/api/v2/shot/stats/putt",
+      function (puttData) {
+        if (puttData.length === 0) {
+          console.log("No putt Data found");
+        }
+        last10DataPutt = puttData;
+        pendingRequests--;//since we started at 1, we do need to decrement here even though we aren't doing onreceive
+      }).fail(function () {
+        console.log(`Failed to retrieve last 10 putt data`);
+        pendingRequests--;
+        onReceive();
+  });
+  
   jQuery.getJSON(
       `https://connect.garmin.com/modern/proxy/gcs-golfcommunity/api/v2/scorecard/summary?per-page=10000&user-locale=en&_=1615882865621`,
       function (_summary) {
@@ -96,7 +167,8 @@ URL starting with: ${connectURL})`);
       }
   ).fail(() => {
     alert("Failed to get scorecard summary list")
-  })
+  });
+  
 
   //jQuery.getJSON("https://connect.garmin.com/modern/proxy/gcs-golfcommunity/api/v2/shot/scorecard/194545130/hole?hole-numbers=6&image-size=IMG_730X730&_=1635952489437")
   function onReceive() {
@@ -124,7 +196,12 @@ URL starting with: ${connectURL})`);
       summary,
       details,
       shotDetails,
-      clubs
+      clubs,
+      last10DataStats,
+      last10DataDrive,
+      last10DataApproach,
+      last10DataChip,
+      last10DataPutt
     }
 
     const output = JSON.stringify(data, null, 2)

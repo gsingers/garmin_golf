@@ -25,7 +25,7 @@
           .id,
           .name?,
           .clubTypeId,
-          .clubStats.averageDistance*1.093613,
+          if .clubStats.averageDistance == null then 0 else .clubStats?.averageDistance?*1.093613 end,
           .clubStats.shotsCount,
           .clubStats.percentFairwayHit,
           .clubStats.percentFairwayLeft,

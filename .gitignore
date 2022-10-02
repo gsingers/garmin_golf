@@ -1,2 +1,5 @@
 data/
 .idea
+*.iml
+Drive/
+.DS_Store

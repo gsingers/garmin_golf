@@ -14,10 +14,20 @@
     "Handicapped Strokes",
     "Steps Taken",
     "Distance Walked",
+    "Putts",
+    "Under Par",
+    "Pars",
+    "Bogeys",
+    "Over Bogey",
+    "Birdie",
+    "Eagle",
+    "Better than Eagle",
     ([range(1;19)] | map(tostring |
         "Hole \(.) - Time (UTC)",
         "Hole \(.) - Par",
         "Hole \(.) - Strokes",
+        "Hole \(.) - Putts",
+        "Hole \(.) - Penalties",
         "Hole \(.) - Handicap Score",
         "Hole \(.) - Fairway Shot Outcome"
     ) | .[])
@@ -28,6 +38,7 @@
 (
     .details[] |
         .scorecardDetails[0].scorecard as $scorecard |
+        .scorecardDetails[0].scorecardStats.round as $roundStats |
         .courseSnapshots[0] as $course |
         [
             $scorecard.id,
@@ -41,10 +52,20 @@
             $scorecard.handicappedStrokes,
             $scorecard.stepsTaken,
             $scorecard.distanceWalked,
+            $roundStats.putts,
+            $roundStats.holesUnderPar,
+            $roundStats.holesPar,
+            $roundStats.holesBogey,
+            $roundStats.holesOverBogey,
+            $roundStats.holesBirdie,
+            $roundStats.holesEagle,
+            $roundStats.holesDoubleEagleOrUnder,
             ($scorecard.holes | map(
                 .lastModifiedDt,
                 $course.holePars[.number-1:.number],
                 .strokes,
+                .putts,
+                .penalties,
                 .handicapScore,
                 .fairwayShotOutcome
             ) | .[])

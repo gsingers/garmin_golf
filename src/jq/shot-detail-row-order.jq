@@ -20,7 +20,7 @@
         "Shot \(.) - Type",
         "Shot \(.) - End Lat",
         "Shot \(.) - End Lon",
-        "Shot \(.) - Time",
+        "Shot \(.) - Time"
     ) | .[])
 
 ],
