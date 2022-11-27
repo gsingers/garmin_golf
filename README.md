@@ -4,18 +4,24 @@ This repo was inspired by the [Export Golf Scorecards](https://forums.garmin.com
 
 I've modified the [original code](https://forums.garmin.com/apps-software/mobile-apps-web/f/garmin-connect-web/128000/export-golf-scorecards/1229772#1229772) to download club data and shot-by-shot data for those users of Garmin's CT10 shot trackers.  
 
-I'm now in the process of upgrading this to Python, Pandas and Streamlit.  See the JQ section below if you want the original JQ + Google Sheets version
+The new preferred method for processing the data is via Python and Streamlit.  This approach can automatically connect
+to Garmin and download the data for you, all you need to do is provide your credentials.  
+
+See the JQ section below if you want the original JQ + Google Sheets version
   
 # Getting Data from Garmin
 
 Regardless of whether you use the older JQ version or the newer Pandas/Python version, you need to get
-data from Garmin and there is only one way to do that.
+data from Garmin.
 
-## Usage
+## In the Streamlit application
+
+## Manual Download via Javascript
+### Usage
 
 Directions taken, more or less, from the thread linked above and modified for the script being in this repo.
 
-### Usage without Installation in the Browser
+#### Usage without Installation in the Browser
 
 1. Download or otherwise copy/checkout the script in [`src/garmin-download.js`](https://github.com/gsingers/garmin_golf/blob/main/src/garmin-download.js)
 1. Sign into Garmin Connect
@@ -26,7 +32,7 @@ Directions taken, more or less, from the thread linked above and modified for th
         gcExportGolfScores()
         
         
-### Usage with Installation   in the Browser
+#### Usage with Installation in the Browser
 
 1. Download or otherwise copy/checkout the script in [`src/garmin-download.js`](https://github.com/gsingers/garmin_golf/blob/main/src/garmin-download.js)
 1. Open this page: https://caiorss.github.io/bookmarklet-maker/
@@ -37,10 +43,9 @@ Directions taken, more or less, from the thread linked above and modified for th
 
 If you don't have a bookmark bar or you're on mobile, select and copy the contents of Output box, bookmark any site at all, edit the bookmark, then paste what you just copied into the Address/Location/URL box. (In Firefox you can also right-click and select "Bookmark this link")
 
-#### After Installation
+##### After Installation
 
 1. Sign into Garmin Connect
-
 1.  Click on "GC export golf scores" bookmark. A dialog will open in the current tab.
 
 

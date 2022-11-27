@@ -3,3 +3,11 @@ data/
 *.iml
 Drive/
 .DS_Store
+**/.pytest_cache
+**/state.json
+**/screen.png
+**/*trace*.zip
+**/signed.png
+**/.streamlit/*
+**/.streamlit/secrets.toml
+**/__pycache__

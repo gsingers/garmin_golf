@@ -2,3 +2,10 @@ ipython
 pandas
 requests
 streamlit
+pytest-playwright
+watchdog
+matplotlib
+numpy
+click
+psycopg2-binary
+SQLAlchemy
